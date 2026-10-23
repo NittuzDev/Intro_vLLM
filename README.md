@@ -1,4 +1,4 @@
-# Serving LLMs Efficiently with vLLM
+# vLLM test and benchmarks
 
 This is the environment used to run [`IntrovLLM.ipynb`](IntrovLLM.ipynb).
 
