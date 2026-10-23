@@ -25,15 +25,12 @@ In the first terminal:
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
-source "$HOME/.local/bin/env"
 
 uv venv ~/vllm-env --python 3.12.12
 source ~/vllm-env/bin/activate
 uv pip install vllm==0.32.0 --torch-backend=auto
 vllm download-kernels
 ```
-
-`vllm download-kernels` fetches the precompiled kernels so the first server start does not compile them. Leave this environment with `deactivate`.
 
 Do not start the server yet if you still need to download the Ollama model. Both servers want the same GPU.
 
@@ -42,6 +39,10 @@ Do not start the server yet if you still need to download the Ollama model. Both
 In a second terminal. Ollama is a system program, not a package inside the vLLM virtualenv. On RHEL the installer unpacks a `.tar.zst`, so `zstd` has to be present first.
 
 ```bash
+uv venv ~/ollama-env --python 3.12
+source ~/ollama-env/bin/activate
+
+
 sudo dnf install zstd
 curl -fsSL https://ollama.com/install.sh | OLLAMA_VERSION=0.40.8 sh
 ollama --version
@@ -102,7 +103,7 @@ Run the Ollama cell and the chart cell. Thirty-two slots of 4096 tokens need a l
 **Prefix caching.** Unload Ollama so vLLM can use the GPU.
 
 ```bash
-ollama stop qwen3:1.7b-fp16
+ollama stop qwen3:1.7b-fp16 (or ctrl+c)
 ```
 
 Start vLLM with prefix caching off:
